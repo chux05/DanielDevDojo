@@ -12,46 +12,28 @@
 
 @if (root != null)
 {
-<div class="row justify-content-center">
+    <div class="row justify-content-center">
 
-    @foreach (var item in results)
-    {
-        <div class="card justify-content-center col-6 mr-4 mb-3">
-            <div class="card-body">
-                <input type="text" @bind="FirstName"/>
-                <button @onclick="Postdetials">POst</button>
+        @foreach (var item in results)
+        {
+            <div class="card justify-content-center">
+                <div class="card-body">
+
+                </div>
             </div>
-        </div>
-    }
+        }
 
-</div>
+    </div>
 }
 
 @code {
     Root root = new Root();
     List<Result> results = new List<Result>();
 
-    string FirstName;
-    string LastName;
-    string Location;
-    int age;
 
     protected override async Task OnInitializedAsync()
     {
         root = await http.GetFromJsonAsync<Root>("https://randomuser.me/api/");
         results = root.results; //returns results as a single person even though it is a list
-        FirstName = results[0].name.first;
-        LastName = results[0].name.last;
-
     }
-
-    private async Task Postdetials()
-    {
-        results[0].name.first = FirstName;
-        results[0].name.last = LastName;
-        results[0].name.last = LastName;
-        await http.PostAsJsonAsync("api/person", results[0]);
-    }
-
-
 }
